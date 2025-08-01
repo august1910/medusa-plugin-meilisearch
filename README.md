@@ -20,13 +20,13 @@ This plugin integrates MeiliSearch with your Medusa e-commerce store and adds su
 Run the following command to install the plugin with **npm**:
 
 ```bash
-npm install --save @rokmohar/medusa-plugin-meilisearch
+npm install --save august1910-medusa-plugin-meilisearch
 ```
 
 Or with **yarn**:
 
 ```bash
-yarn add @rokmohar/medusa-plugin-meilisearch
+yarn add august1910-medusa-plugin-meilisearch
 ```
 
 ### Upgrade to v1.0
@@ -49,7 +49,7 @@ Add the plugin to your `medusa-config.ts` file:
 
 ```js
 import { loadEnv, defineConfig } from '@medusajs/framework/utils'
-import { MeilisearchPluginOptions } from '@rokmohar/medusa-plugin-meilisearch'
+import { MeilisearchPluginOptions } from 'august1910-medusa-plugin-meilisearch'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
@@ -58,7 +58,7 @@ module.exports = defineConfig({
   plugins: [
     // ... other plugins
     {
-      resolve: '@rokmohar/medusa-plugin-meilisearch',
+      resolve: 'august1910-medusa-plugin-meilisearch',
       options: {
         config: {
           host: process.env.MEILISEARCH_HOST ?? '',
@@ -181,7 +181,7 @@ You can provide detailed configuration for each translatable field:
 The plugin provides a flexible way to transform your products with custom translations. Instead of relying on specific storage formats, you can provide translations directly to the transformer:
 
 ```typescript
-import { transformProduct } from '@rokmohar/medusa-plugin-meilisearch'
+import { transformProduct } from 'august1910-medusa-plugin-meilisearch'
 
 const getProductTranslations = async (productId: string) => {
   // Example: fetch from your translation service/database

@@ -1,12 +1,12 @@
 {
-  "name": "@rokmohar/medusa-plugin-meilisearch",
-  "version": "1.2.2",
+  "name": "august1910-medusa-plugin-meilisearch",
+  "version": "1.2.3",
   "description": "Meilisearch plugin for Medusa 2",
   "author": "Rok Mohar",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rokmohar/medusa-plugin-meilisearch.git"
+    "url": "git+https://github.com/august1910/medusa-plugin-meilisearch.git"
   },
   "keywords": [
     "plugin",
