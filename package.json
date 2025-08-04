@@ -1,6 +1,6 @@
 {
   "name": "august1910-medusa-plugin-meilisearch",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "Meilisearch plugin for Medusa 2",
   "author": "Rok Mohar",
   "license": "MIT",

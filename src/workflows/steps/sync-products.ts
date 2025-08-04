@@ -1,7 +1,7 @@
 import { createStep, StepResponse } from '@medusajs/workflows-sdk'
 import { MEILISEARCH_MODULE, MeiliSearchService } from '../../modules/meilisearch'
 import { SearchUtils } from '@medusajs/utils'
-import {addPriceList} from './add-price-list'
+import { handleMoreInfo } from './handle-more-info'
 
 export type StepInput = {
   filters?: Record<string, unknown>
@@ -47,8 +47,10 @@ export const syncProductsStep = createStep(
     )
 
     const productsToDelete = Array.from(existingProductIds).filter((id) => !products.some((p) => p.id === id))
-    // lấy thông tin về price list
-      await addPriceList(products, queryService);
+
+    // xử lý thêm thông tin từ module khác
+    await handleMoreInfo(products, queryService);
+
     await Promise.all(productIndexes.map((index) => meilisearchService.addDocuments(index, products)))
     await Promise.all(productIndexes.map((index) => meilisearchService.deleteDocuments(index, productsToDelete)))
 

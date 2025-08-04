@@ -1,7 +1,7 @@
 import { createStep, StepResponse } from '@medusajs/workflows-sdk'
 import { SearchUtils } from '@medusajs/utils'
 import { MEILISEARCH_MODULE, MeiliSearchService } from '../../modules/meilisearch'
-import {addPriceList} from './add-price-list'
+import { handleMoreInfo } from './handle-more-info'
 
 type StepInput = {
   id: string
@@ -19,8 +19,9 @@ export const upsertProductStep = createStep('upsert-products', async ({ id }: St
     fields: productFields,
     filters: { id },
   })
-  // lấy thông tin về price list
-  await addPriceList(products, queryService);
+  // xử lý thêm thông tin từ module khác
+  await handleMoreInfo(products, queryService);
+
   await Promise.all(
     products.map(async (product) => {
       if (!product.status || product.status === 'published') {
