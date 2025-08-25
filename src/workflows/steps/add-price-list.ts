@@ -19,6 +19,29 @@ export const addPriceList = async (
             fields: ['variant_id', 'price_set_id'],
             filters: { variant_id: variantIds },
         });
+        
+        // 
+        const { data: price_list_actives } = await queryService.graph({
+            entity: 'price_list',
+            fields: ['id'],
+            filters: {
+                status: 'active',
+                $and: [
+                    {
+                        $or: [
+                            { starts_at: { $lte: new Date() } },  // starts_at <= NOW
+                            { starts_at: null }                   // OR starts_at IS NULL
+                        ]
+                    },
+                    {
+                        $or: [
+                            { ends_at: { $gte: new Date() } },    // NOW <= ends_at
+                            { ends_at: null }                     // OR ends_at IS NULL
+                        ]
+                    }
+                ]
+            },
+        });
 
         // nếu có product_variant_price_sets thì tiến hành lấy data trong price
         // price nào có price_list_id thì sẽ push tiếp vào mảng prices của variant
@@ -30,13 +53,18 @@ export const addPriceList = async (
                 priceSetIds.push(price_set_id)
                 price_set_id_variant[variant_id] = price_set_id;
             })
+            let filters: any = {
+                price_set_id: priceSetIds,
+            };
+            // chỉ thêm điều kiện price_list_id nếu price_list_actives tồn tại và không rỗng
+            if (price_list_actives && price_list_actives.length > 0) {
+                filters.price_list_id = price_list_actives.map(pl => pl.id);
+            }
             if (priceSetIds && priceSetIds.length > 0) {
                 const { data: prices } = await queryService.graph({
                     entity: 'price',
                     fields: ["id", "title", "price_set_id", "currency_code", "raw_amount", "rules_count", "created_at", "updated_at", "deleted_at", "price_list_id", "amount", "min_quantity", "max_quantity"],
-                    filters: {
-                        price_set_id: priceSetIds,
-                    },
+                    filters
                 });
 
                 // gán prices vào variants
