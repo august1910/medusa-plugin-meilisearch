@@ -1,8 +1,8 @@
 {
   "name": "august1910-medusa-plugin-meilisearch",
-  "version": "1.2.6",
+  "version": "1.2.8",
   "description": "Meilisearch plugin for Medusa 2",
-  "author": "Rok Mohar",
+  "author": "August fork Rok Mohar",
   "license": "MIT",
   "repository": {
     "type": "git",
